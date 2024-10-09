@@ -1,4 +1,4 @@
-let isAuthenticated: boolean = false;
+let isAuthenticated: boolean = true;
 
 export const AuthProvider = {
     login(callback: VoidFunction) {

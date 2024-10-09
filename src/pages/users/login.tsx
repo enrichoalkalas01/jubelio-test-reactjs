@@ -3,34 +3,24 @@ import axios from "axios"
 import Swal from 'sweetalert2'
 
 export default function Page() {
-    const [Username, setUsername] = useState(null)
-    const [Password, setPassword] = useState(null)
-    const [Email, setEmail] = useState(null)
-    const [Firstname, setFirstname] = useState(null)
-    const [Lastname, setLastname] = useState(null)
-    const [Phonenumber, setPhonenumber] = useState(null)
-    const [Companyname, setCompanyname] = useState(null)
+    const [Username, setUsername] = useState<string | null>(null)
+    const [Password, setPassword] = useState<string | null>(null)
 
     useEffect(() => {
 
-    }, [Username, Password, Email, Firstname, Lastname, Phonenumber, Companyname])
+    }, [Username, Password])
 
-    const handleForm = async (e) => {
+    const handleForm = async (e: any) => {
         e.preventDefault()
 
         try {
             let DataPassing = {
                 username: Username,
                 password: Password,
-                email: Email,
-                firstname: Firstname,
-                lastname: Lastname,
-                phonenumber: Phonenumber,
-                companyname: Companyname,
             }
 
             let config = {
-                url: `${ process.env.NEXT_PUBLIC_BASE_URL_API }/authentication/register`,
+                url: `${ process.env.NEXT_PUBLIC_BASE_URL_API }/authentication/login`,
                 method: 'post',
                 headers: {
                     'Content-Type': 'application/json'
@@ -50,7 +40,7 @@ export default function Page() {
             setTimeout(() => {
                 window.location.href = "/login"
             }, 1500)
-        } catch (error) {
+        } catch (error: any) {
             console.log(error)
             let message = error?.response?.data?.message || error?.message
             Swal.fire({
@@ -73,7 +63,7 @@ export default function Page() {
                             className="mx-auto h-10 w-auto"
                         />
                         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-                            Register account
+                            Login account
                         </h2>
                     </div>
                     
@@ -121,16 +111,16 @@ export default function Page() {
                                     type="submit"
                                     className="flex mt-6 w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                 >
-                                    Register Now
+                                    Submit
                                 </button>
                             </div>
 
                         </form>
 
                         <p className="mt-10 text-center text-sm text-gray-500">
-                            Do You Have Account ?{' '}
-                            <a href="/login" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-                                Login Here
+                            You Dont Have Account ?{' '}
+                            <a href="/register" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+                                Register Here
                             </a>
                         </p>
                     </div>

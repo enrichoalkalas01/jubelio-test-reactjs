@@ -1,23 +1,21 @@
-"use client"
-
 import { useEffect, useState } from "react"
 import axios from "axios"
 import Swal from 'sweetalert2'
 
 export default function Register() {
-    const [Username, setUsername] = useState(null)
-    const [Password, setPassword] = useState(null)
-    const [Email, setEmail] = useState(null)
-    const [Firstname, setFirstname] = useState(null)
-    const [Lastname, setLastname] = useState(null)
-    const [Phonenumber, setPhonenumber] = useState(null)
-    const [Companyname, setCompanyname] = useState(null)
+    const [Username, setUsername] = useState<string | null>(null)
+    const [Password, setPassword] = useState<string | null>(null)
+    const [Email, setEmail] = useState<string | null>(null)
+    const [Firstname, setFirstname] = useState<string | null>(null)
+    const [Lastname, setLastname] = useState<string | null>(null)
+    const [Phonenumber, setPhonenumber] = useState<string | null>(null)
+    const [Companyname, setCompanyname] = useState<string | null>(null)
 
     useEffect(() => {
 
     }, [Username, Password, Email, Firstname, Lastname, Phonenumber, Companyname])
 
-    const handleForm = async (e) => {
+    const handleForm = async (e: any) => {
         e.preventDefault()
 
         try {
@@ -52,7 +50,7 @@ export default function Register() {
             setTimeout(() => {
                 window.location.href = "/login"
             }, 1500)
-        } catch (error) {
+        } catch (error: any) {
             console.log(error)
             let message = error?.response?.data?.message || error?.message
             Swal.fire({

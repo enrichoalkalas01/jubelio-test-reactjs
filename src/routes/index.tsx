@@ -1,4 +1,3 @@
-import React, { ReactNode } from "react";
 import {
     BrowserRouter as Router,
     Routes,
@@ -8,10 +7,16 @@ import {
 } from "react-router-dom";
 
 import { AuthProvider } from "./auth";
+
 import Login from "../pages/users/login";
 import Register from "../pages/users/register";
 import Dashboard from "../pages/dashboards";
 import NotFound from "../pages/notfound";
+import ProductPage from "../pages/dashboards/products/product-page";
+import ProductDetail from "../pages/dashboards/products/product-detail";
+import ProductCreate from "../pages/dashboards/products/product-create";
+import ProductUpdate from "../pages/dashboards/products/product-update";
+import LayoutDashboard from "../components/layouts/layout-dashboard";
 
 // interface PropsRouter {
 //     children: ReactNode
@@ -33,13 +38,18 @@ export default function RouterApp() {
             <Router>
                 <Routes>
                     <Route element={<PublicRoute />}>
-
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
                     </Route>
 
-                    <Route element={<PublicRoute />}>
-                        <Route path="/dashboard" element={<Dashboard />} />
+                    <Route element={<PrivateRoute />}>
+                        <Route path="/dashboard" element={<LayoutDashboard />}>
+                            <Route index element={<Dashboard />} />
+                            <Route path="products" element={<ProductPage />} />
+                            <Route path="products/create" element={<ProductCreate />} />
+                            <Route path="products/:id/update" element={<ProductUpdate />} />
+                            <Route path="products/:id" element={<ProductDetail />} />
+                        </Route>
                     </Route>
 
                     <Route path="*" element={<NotFound />} />
