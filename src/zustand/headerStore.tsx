@@ -3,8 +3,8 @@ import UniversalCookie from "universal-cookie";
 
 const cookies = new UniversalCookie(null, { path: '/' });
 const token = cookies.get("__act");
-const base_url_api = "http://localhost:5700/api/v1"
-const base_url_assets = "http://localhost:5700"
+const base_url_api = import.meta.env.VITE_API_URL || "http://localhost:5700/api/v1"
+const base_url_assets = import.meta.env.VITE_API_ASSETS || "http://localhost:5700"
 
 interface PropsHeaderStore {
     base_url_api: string,
