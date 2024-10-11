@@ -1,11 +1,12 @@
-import { AuthProvider } from "../routes/auth"
+import { useAuthStore } from "../zustand/userStore"
 
 export default function NotFound() {
-    if ( AuthProvider.isAuthenticated() ) {
+    const { authStatus } = useAuthStore()
+    if ( authStatus ) {
         setTimeout(() => { window.location.href = "/dashboard" }, 2000)
     }
 
-    if ( !AuthProvider.isAuthenticated() ) {
+    if ( !authStatus ) {
         setTimeout(() => { window.location.href = "/login" }, 2000)
     }
 
