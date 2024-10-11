@@ -6,7 +6,7 @@ import {
     Outlet,
 } from "react-router-dom";
 
-import { AuthProvider } from "./auth";
+import { useAuthStore } from "../zustand/userStore";
 
 import Login from "../pages/users/login";
 import Register from "../pages/users/register";
@@ -24,12 +24,14 @@ import LayoutDashboard from "../components/layouts/layout-dashboard";
 
 // Public Route Wrapper ( hanya untuk access yang sudah authenticate )
 const PrivateRoute = () => {
-    return AuthProvider.isAuthenticated() ? <Outlet /> : <Navigate to="/login" />;
+    const { authStatus } = useAuthStore()
+    return authStatus ? <Outlet /> : <Navigate to="/login" />;
 }
 
 // Public Route Wrapper ( hanya untuk access yang tidak authenticate )
 const PublicRoute = () => {
-    return AuthProvider.isAuthenticated() ? <Navigate to="/dashboard" /> : <Outlet />;
+    const { authStatus } = useAuthStore()
+    return authStatus ? <Navigate to="/dashboard" /> : <Outlet />;
 }
 
 export default function RouterApp() {

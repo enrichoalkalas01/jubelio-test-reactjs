@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
 import Swal from 'sweetalert2'
+import { useHeaderStore } from "../../zustand/headerStore"
 
 export default function Register() {
+    const { base_url_api } = useHeaderStore()
     const [Username, setUsername] = useState<string | null>(null)
     const [Password, setPassword] = useState<string | null>(null)
     const [Email, setEmail] = useState<string | null>(null)
     const [Firstname, setFirstname] = useState<string | null>(null)
     const [Lastname, setLastname] = useState<string | null>(null)
     const [Phonenumber, setPhonenumber] = useState<string | null>(null)
-    const [Companyname, setCompanyname] = useState<string | null>(null)
 
     useEffect(() => {
 
-    }, [Username, Password, Email, Firstname, Lastname, Phonenumber, Companyname])
+    }, [Username, Password, Email, Firstname, Lastname, Phonenumber])
 
     const handleForm = async (e: any) => {
         e.preventDefault()
@@ -26,11 +27,10 @@ export default function Register() {
                 firstname: Firstname,
                 lastname: Lastname,
                 phonenumber: Phonenumber,
-                companyname: Companyname,
             }
 
             let config = {
-                url: `${ process.env.NEXT_PUBLIC_BASE_URL_API }/authentication/register`,
+                url: `${ base_url_api }/register`,
                 method: 'post',
                 headers: {
                     'Content-Type': 'application/json'
@@ -165,24 +165,6 @@ export default function Register() {
                                         required
                                         onChange={(e) => setEmail(e.target.value)}
                                         autoComplete="Email"
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                    />
-                                </div>
-                            </div>
-
-                            {/* Companyname */}
-                            <div>
-                                <label htmlFor="Companyname" className="block text-sm font-medium leading-6 text-gray-900">
-                                    Companyname
-                                </label>
-                                <div className="mt-2">
-                                    <input
-                                        id="Companyname"
-                                        name="Companyname"
-                                        type="text"
-                                        required
-                                        onChange={(e) => setCompanyname(e.target.value)}
-                                        autoComplete="Companyname"
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
                                 </div>

@@ -7,10 +7,10 @@ interface PropsRegularInput {
     defaultValue?: string,
     placeholder?: string,
     type?: string,
-    min?: number,
-    minLength?: number,
-    max?: number,
-    maxLength?: number,
+    min?: number | null,
+    minLength?: number | null,
+    max?: number | null,
+    maxLength?: number | null,
     labelName?: string,
     isRequired?: boolean,
     isDisabled?: boolean,
@@ -25,9 +25,9 @@ export default function RegularInput({
     placeholder = "input here",
     type = "text",
     min = 0,
-    minLength = 0,
+    minLength = null,
     max = 0,
-    maxLength = 0,
+    maxLength = null,
     labelName = "",
     isRequired = false,
     isDisabled = false,
@@ -37,7 +37,7 @@ export default function RegularInput({
     control = null,
     name = "defaultinput",
 }: PropsRegularInput) {
-
+    
     return(
         <>
             <div className="w-full">
@@ -54,7 +54,7 @@ export default function RegularInput({
                         }}
 
                         render={({ field, formState }) => {
-                            const { onBlur, onChange, value } = field;
+                            const { onBlur, onChange, value, name } = field;
                             const { dirtyFields, errors } = formState;
                             
                             return(
@@ -72,13 +72,13 @@ export default function RegularInput({
                                         <TextInput
                                             onBlur={onBlur}
                                             onChange={onChange}
-                                            value={value}
+                                            value={isDisabled ? defaultValue : value}
                                             type={type}
                                             disabled={isDisabled}
-                                            min={min}
-                                            minLength={minLength}
-                                            max={max}
-                                            maxLength={maxLength}
+                                            min={min || 0}
+                                            minLength={minLength || 1}
+                                            max={max || undefined}
+                                            maxLength={maxLength || undefined}
                                             placeholder={placeholder}
                                             color={
                                                 (dirtyFields[name] && value !== defaultValue) ? "warning" :

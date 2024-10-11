@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
 import Swal from 'sweetalert2'
+import UniversalCookie from "universal-cookie"
+import { useHeaderStore } from "../../zustand/headerStore"
+
+const cookies = new UniversalCookie(null, { path: '/' })
 
 export default function Page() {
+    const { base_url_api } = useHeaderStore()
     const [Username, setUsername] = useState<string | null>(null)
     const [Password, setPassword] = useState<string | null>(null)
 
@@ -20,15 +25,24 @@ export default function Page() {
             }
 
             let config = {
-                url: `${ process.env.NEXT_PUBLIC_BASE_URL_API }/authentication/login`,
+                url: `${ base_url_api }/login`,
                 method: 'post',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 data: JSON.stringify(DataPassing)
             }
-
+            
             let response = await axios(config)
+            cookies.set("__act", response.data.data.access_token.token, {
+                maxAge: response.data.data.access_token.expired.formatted,
+                secure: true,
+            })
+
+            cookies.set("__rft", response.data.data.refresh_token.token, {
+                maxAge: response.data.data.refresh_token.expired.formatted,
+                secure: true,
+            })
 
             Swal.fire({
                 title: 'Success',
@@ -38,7 +52,7 @@ export default function Page() {
             })
 
             setTimeout(() => {
-                window.location.href = "/login"
+                window.location.href = "/dashboard"
             }, 1500)
         } catch (error: any) {
             console.log(error)

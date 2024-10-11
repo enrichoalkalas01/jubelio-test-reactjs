@@ -2,7 +2,7 @@
 interface PropsItems {
     title: string,
     sku: string,
-    price: number,
+    price: string,
     image: string,
 }
 
