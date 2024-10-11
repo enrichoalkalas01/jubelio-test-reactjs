@@ -1,10 +1,10 @@
 import { ImBarcode } from "react-icons/im";
 
 interface PropsItems {
-    title: string,
-    sku: string,
-    price: string,
-    image: string,
+    title?: string,
+    sku?: string,
+    price?: string,
+    image?: string,
 }
 
 export default function ProductItems({ title, sku, price, image }: PropsItems) {
