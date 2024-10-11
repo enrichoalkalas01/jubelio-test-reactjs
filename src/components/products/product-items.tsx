@@ -7,7 +7,7 @@ interface PropsItems {
     image?: string,
 }
 
-export default function ProductItems({ title, sku, price, image }: PropsItems) {
+export default function ProductItems({ title, sku, price }: PropsItems) {
     return(
         <>
             <div className="px-4 py-4 sm:px-6">
