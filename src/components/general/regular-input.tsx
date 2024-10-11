@@ -14,6 +14,7 @@ interface PropsRegularInput {
     labelName?: string,
     isRequired?: boolean,
     isDisabled?: boolean,
+    isEditable?: boolean,
     control: any,
     name: string,
     onDataChange?: (e: string) => void,
@@ -31,13 +32,14 @@ export default function RegularInput({
     labelName = "",
     isRequired = false,
     isDisabled = false,
+    isEditable = false,
     // onDataChange = (e: any) => {},
 
     // ## React Hook Forms Props ##
     control = null,
     name = "defaultinput",
 }: PropsRegularInput) {
-    
+
     return(
         <>
             <div className="w-full">
@@ -48,7 +50,7 @@ export default function RegularInput({
                         defaultValue={defaultValue}
                         rules={{
                             required: {
-                                value: isRequired,
+                                value: isRequired && !defaultValue,
                                 message: "This field is required and cannot be empty",
                             },
                         }}
@@ -70,11 +72,14 @@ export default function RegularInput({
                                     </div>
                                     <div>
                                         <TextInput
+                                            id={name}
                                             onBlur={onBlur}
-                                            onChange={onChange}
-                                            value={isDisabled ? defaultValue : value}
+                                            onChange={(e) => {
+                                                onChange(e); // Simpan perubahan dari input
+                                            }}
+                                            value={!value && !dirtyFields[name] ? defaultValue : value}
                                             type={type}
-                                            disabled={isDisabled}
+                                            disabled={isDisabled || !isEditable}
                                             min={min || 0}
                                             minLength={minLength || 1}
                                             max={max || undefined}
@@ -102,6 +107,8 @@ export default function RegularInput({
                                                 </>
                                             }
                                         />
+
+
                                     </div>
                                 </div>
                             )

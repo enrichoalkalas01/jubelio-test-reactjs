@@ -13,7 +13,7 @@ export default function ProductCreate() {
     const { token, base_url_api } = useHeaderStore()
     const { handleSubmit, control } = useForm();
     const [images, setImages] = useState<any | null>(null)
-
+  
     const onSubmitHandler = async (data: any) => {
         try {
             const formData = new FormData()

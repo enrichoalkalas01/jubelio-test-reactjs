@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import { useParams } from 'react-router-dom';
-import { Button } from 'flowbite-react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
@@ -14,7 +13,6 @@ export default function ProductDetail() {
     const { id } = useParams()
     const { token, base_url_api, base_url_assets } = useHeaderStore()
     const { control } = useForm()
-    const [images, setImages] = useState<any | null>(null)
     const [imageURL, setImageURL] = useState<string | undefined>(undefined)
     const [product, setProduct] = useState<any | null>(null)
 
@@ -116,7 +114,6 @@ export default function ProductDetail() {
                             <DragAndDropImagesMini
                                 disabled={true}
                                 images={imageURL}
-                                setImages={(e) => setImages(e)}
                             />
                         </div>
                     </div>
