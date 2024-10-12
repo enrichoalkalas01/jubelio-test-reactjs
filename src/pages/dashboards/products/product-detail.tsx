@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { Button } from "flowbite-react"
 
 import { useHeaderStore } from '../../../zustand/headerStore';
 import WrapperCard from '../../../components/wrappers/wrapper-card';
@@ -32,10 +33,10 @@ export default function ProductDetail() {
             }
 
             let response = await axios(config)
-            console.log(response.data.data)
             if ( (response.data.data?.images !== null && response.data.data?.images !== "null" ) && response.data.data ) {
                 setImageURL(base_url_assets + response.data.data?.images)
             }
+
             setProduct(response.data.data)
         } catch (error: any) {
             console.log(error)
@@ -48,6 +49,38 @@ export default function ProductDetail() {
             setTimeout(() => {
                 window.location.href = "/dashboard/products"
             }, 1500)
+        }
+    }
+
+    const deleteData = async ({ id }: { id: string | number }) => {
+        try {
+            let config = {
+                url: `${base_url_api}/products/${id}`,
+                method: "delete",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+            }
+
+            let response = await axios(config)
+
+            Swal.fire({
+                icon: "success",
+                title: "Success",
+                text: `${ response?.data?.message }`,
+            });
+
+            setTimeout(() => {
+                window.location.href = "/dashboard/products"
+            }, 1500)
+        } catch (error: any) {
+            console.log(error)
+            Swal.fire({
+                icon: "error",
+                title: "Success",
+                text: `${ error?.response?.data?.message }`,
+            });
         }
     }
     
@@ -116,6 +149,10 @@ export default function ProductDetail() {
                                 images={imageURL}
                             />
                         </div>
+                    </div>
+                    <div className='w-full flex gap-4'>
+                        <Button color="failure" onClick={() => deleteData({ id: product?.id }) }>Delete</Button>
+                        <Button color="warning" onClick={() => window.location.href = `/dashboard/products/${product?.id}`}>Edit</Button>
                     </div>
                 </WrapperCard>
             </section>
